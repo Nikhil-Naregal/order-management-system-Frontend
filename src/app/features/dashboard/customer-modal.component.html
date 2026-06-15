@@ -1,0 +1,59 @@
+<div class="modal-backdrop" (click)="close.emit()">
+  <div class="modal-card glass-panel" (click)="$event.stopPropagation()">
+    <div class="modal-head">
+      <div>
+        <p class="modal-eyebrow">{{ mode === 'edit' ? 'Edit order' : 'View order' }}</p>
+        <h3>{{ customer.name }}</h3>
+        <p class="muted">Total bill: {{ customer.totalBill | currency:'INR':'symbol':'1.2-2' }}</p>
+      </div>
+      <button class="ghost-btn" type="button" (click)="close.emit()">Close</button>
+    </div>
+
+    <div *ngIf="mode === 'edit'" class="edit-name-wrap">
+      <div class="field">
+        <label>User name</label>
+        <input [(ngModel)]="editableName" placeholder="Rename customer">
+      </div>
+      <button class="secondary-btn" type="button" (click)="submitName()">Save Name</button>
+    </div>
+
+    <div class="line-list">
+      <div class="line-card" *ngFor="let line of customer.orderLines">
+        <div>
+          <strong>{{ line.itemName }}</strong>
+          <div class="muted tiny">{{ line.categoryName }} · Qty {{ line.quantity }}</div>
+        </div>
+        <div class="line-right">
+          <strong>{{ line.lineTotal | currency:'INR':'symbol':'1.2-2' }}</strong>
+          <button *ngIf="mode === 'edit'" class="warn-btn" type="button" (click)="removeLine.emit(line.id)">Remove</button>
+        </div>
+      </div>
+      <div *ngIf="customer.orderLines.length === 0" class="empty-mini">No items added yet.</div>
+    </div>
+
+    <div *ngIf="mode === 'edit'" class="add-line-panel">
+      <div class="faded-categories">
+        <span class="pill soft" *ngFor="let category of categoryHints">{{ category }}</span>
+      </div>
+      <div class="form-grid">
+        <div class="field">
+          <label>Add in-stock item</label>
+          <select [(ngModel)]="selectedItemId">
+            <ng-container *ngFor="let group of groupedItems">
+              <optgroup [label]="group.category">
+                <option *ngFor="let item of group.items" [ngValue]="item.id">
+                  {{ item.name }} — {{ item.price | currency:'INR':'symbol':'1.2-2' }}
+                </option>
+              </optgroup>
+            </ng-container>
+          </select>
+        </div>
+        <div class="field">
+          <label>Quantity</label>
+          <input type="number" min="1" [(ngModel)]="quantity">
+        </div>
+      </div>
+      <button class="primary-btn" type="button" (click)="submitAddLine()" [disabled]="!selectedItemId">Add item</button>
+    </div>
+  </div>
+</div>

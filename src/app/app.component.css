@@ -1,0 +1,88 @@
+.app-shell {
+  min-height: 100vh;
+}
+
+.header-shell {
+  padding-top: 26px;
+}
+
+.brand-wrap {
+  border-radius: 34px;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.brand-copy {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+}
+
+.brand-logo {
+  width: 92px;
+  height: 92px;
+  border-radius: 24px;
+  box-shadow: 0 18px 32px rgba(0, 0, 0, 0.24);
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: 0.78rem;
+  color: #f7d7a0;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.7rem, 3vw, 2.8rem);
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.nav-link {
+  padding: 14px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.nav-link.active {
+  background: linear-gradient(120deg, rgba(249, 191, 69, 0.28), rgba(126, 163, 255, 0.28));
+  color: white;
+}
+
+.footer-shell {
+  padding-bottom: 24px;
+}
+
+.footer-card {
+  border-radius: 24px;
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.signature {
+  color: #ffe3a1;
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+  .brand-copy {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

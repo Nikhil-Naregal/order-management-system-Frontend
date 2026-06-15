@@ -1,0 +1,147 @@
+<section class="page-shell dashboard-shell">
+  <div class="hero-card glass-panel">
+    <div class="hero-copy">
+      <p class="eyebrow">Main Tab 1</p>
+      <h2>DashBoard</h2>
+      <p class="muted">Track active diners, settle bills fast, and revive inactive users whenever the next round begins.</p>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-box glass-panel">
+        <strong>{{ facade.activeCustomers().length }}</strong>
+        <span>Active</span>
+      </div>
+      <div class="stat-box glass-panel">
+        <strong>{{ facade.inactiveCustomers().length }}</strong>
+        <span>Inactive</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <section class="glass-panel section-card add-card">
+      <div class="section-title">
+        <div>
+          <h3>Add Active User</h3>
+          <p class="muted">Create a fresh order card instantly.</p>
+        </div>
+        <span class="pill">Dynamic updates</span>
+      </div>
+
+      <div class="form-grid">
+        <div class="field">
+          <label>User name</label>
+          <input [(ngModel)]="newCustomerName" placeholder="Ex: Luna Grill">
+        </div>
+        <div class="field">
+          <label>Starter item (optional)</label>
+          <select [(ngModel)]="starterItemId">
+            <option [ngValue]="null">No starter item</option>
+            <option *ngFor="let item of facade.availableItems()" [ngValue]="item.id">
+              {{ item.name }} · {{ item.category.name }}
+            </option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Quantity</label>
+          <input type="number" min="1" [(ngModel)]="starterQuantity">
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button class="primary-btn" type="button" (click)="addCustomer()">Add Active User</button>
+        <span class="muted">{{ bannerMessage }}</span>
+      </div>
+    </section>
+
+    <section class="glass-panel section-card search-card">
+      <div class="section-title">
+        <div>
+          <h3>Search users</h3>
+          <p class="muted">Searches apply to both active and inactive tabs.</p>
+        </div>
+        <span class="pill">Cross-tab search</span>
+      </div>
+
+      <div class="field">
+        <label>Search by user name</label>
+        <input [ngModel]="searchTerm" (ngModelChange)="onSearchChange($event)" placeholder="Type a name...">
+      </div>
+
+      <div *ngIf="facade.errorMessage()" class="alert-error">{{ facade.errorMessage() }}</div>
+    </section>
+  </div>
+
+  <section class="glass-panel section-card body-card">
+    <div class="section-title body-head">
+      <div>
+        <p class="eyebrow">Body</p>
+        <h3>Main Tab 1 features</h3>
+      </div>
+      <div class="tab-switch">
+        <button type="button" [class.active]="activeTab === 'ACTIVE'" (click)="setTab('ACTIVE')">Active Users</button>
+        <button type="button" [class.active]="activeTab === 'INACTIVE'" (click)="setTab('INACTIVE')">InActive Users</button>
+      </div>
+    </div>
+
+    <div *ngIf="facade.dashboardLoading()" class="empty-state">Loading order cards...</div>
+
+    <div *ngIf="!facade.dashboardLoading() && currentCustomers.length === 0" class="empty-state">
+      No users found for this tab. Try adding a user or adjusting the search.
+    </div>
+
+    <div *ngIf="!facade.dashboardLoading() && currentCustomers.length > 0" class="grid-cards">
+      <article class="customer-card" *ngFor="let customer of currentCustomers">
+        <div class="card-top">
+          <div>
+            <span class="status-chip" [class.active]="customer.status === 'ACTIVE'" [class.inactive]="customer.status === 'INACTIVE'">
+              {{ customer.status }}
+            </span>
+            <h4>{{ customer.name }}</h4>
+            <p class="muted">{{ customer.orderLines.length }} ordered item(s)</p>
+          </div>
+          <div class="card-actions">
+            <button class="ghost-btn" type="button" (click)="openModal(customer, 'view')">View</button>
+            <button class="secondary-btn" type="button" (click)="openModal(customer, 'edit')">Edit</button>
+          </div>
+        </div>
+
+        <div class="bill-row">
+          <span>Total Bill</span>
+          <strong>{{ customer.totalBill | currency:'INR':'symbol':'1.2-2' }}</strong>
+        </div>
+
+        <div *ngIf="customer.status === 'ACTIVE'" class="payment-box">
+          <div class="inline-field">
+            <label>One-line payment calculator</label>
+            <input type="number"
+                   [ngModel]="paymentValue(customer.id)"
+                   (ngModelChange)="setPaymentValue(customer.id, $event)"
+                   placeholder="Enter paid amount">
+          </div>
+          <div class="payment-meta">{{ paymentLabel(customer) }}</div>
+          <button class="primary-btn"
+                  type="button"
+                  [disabled]="!paymentComplete(customer)"
+                  (click)="markPaid(customer)">
+            Payment Successful
+          </button>
+        </div>
+
+        <div *ngIf="customer.status === 'INACTIVE'" class="inactive-actions">
+          <button class="secondary-btn" type="button" (click)="backToActive(customer)">Back to Active</button>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <app-customer-modal
+    *ngIf="modalState"
+    [customer]="modalState.customer"
+    [mode]="modalState.mode"
+    [items]="facade.availableItems()"
+    (close)="closeModal()"
+    (saveName)="saveCustomerName($event)"
+    (addLine)="addLine($event)"
+    (removeLine)="removeLine($event)">
+  </app-customer-modal>
+</section>

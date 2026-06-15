@@ -1,0 +1,32 @@
+<div class="app-shell">
+  <header class="page-shell header-shell">
+    <div class="glass-panel brand-wrap">
+      <div class="brand-copy">
+        <img src="assets/logo.svg" alt="B&B logo" class="brand-logo">
+        <div>
+          <p class="eyebrow">B&B · Bread &amp; Beverages</p>
+          <h1>Bold buns. Chill brews. Fast billing.</h1>
+          <p class="muted">A lively burger order-taking dashboard with reusable UI blocks and connected REST APIs.</p>
+        </div>
+      </div>
+      <nav class="nav-tabs" aria-label="Main navigation">
+        <a routerLink="/dashboard" routerLinkActive="active" class="nav-link">DashBoard</a>
+        <a routerLink="/catalog" routerLinkActive="active" class="nav-link">Items, Category</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="page-shell footer-shell">
+    <div class="glass-panel footer-card">
+      <div>
+        <strong>B&B</strong>
+        <span class="muted"> · crafted to feel spicy, smooth, and dynamic.</span>
+      </div>
+      <div class="signature">Brand spark: {{ signature }}</div>
+    </div>
+  </footer>
+</div>
