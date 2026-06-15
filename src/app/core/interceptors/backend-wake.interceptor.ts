@@ -11,8 +11,8 @@ import { mergeMap, retryWhen } from 'rxjs/operators';
 
 @Injectable()
 export class BackendWakeInterceptor implements HttpInterceptor {
-  private readonly maxRetryAttempts = 4;
-  private readonly baseRetryDelayMs = 2000;
+  private readonly maxRetryAttempts = 20;
+  private readonly baseRetryDelayMs = 5000;
 
   intercept(req: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(req).pipe(
