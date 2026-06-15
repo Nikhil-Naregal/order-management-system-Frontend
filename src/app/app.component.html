@@ -1,4 +1,11 @@
 <div class="app-shell">
+  <div class="global-loader" *ngIf="loadingService.loading()">
+    <div class="loader-backdrop">
+      <div class="loader-spinner" aria-hidden="true"></div>
+      <p>Waiting for backend response…</p>
+    </div>
+  </div>
+
   <header class="page-shell header-shell">
     <div class="glass-panel brand-wrap">
       <div class="brand-copy">
