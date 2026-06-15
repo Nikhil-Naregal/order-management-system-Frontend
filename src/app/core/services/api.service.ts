@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Category } from '../models/category.model';
 import { Customer } from '../models/customer.model';
@@ -32,6 +32,13 @@ export class ApiService {
 
   updateItem(id: number, payload: { name: string; price: number; inStock: boolean; categoryId: number }): Observable<Item> {
     return this.http.put<Item>(`${this.baseUrl}/items/${id}`, payload);
+  }
+
+  getDailySalesReport(): Observable<HttpResponse<Blob>> {
+    return this.http.get(`${this.baseUrl}/reports/daily-sales`, {
+      observe: 'response',
+      responseType: 'blob' as const
+    });
   }
 
   getCustomers(status?: 'ACTIVE' | 'INACTIVE', search?: string): Observable<Customer[]> {

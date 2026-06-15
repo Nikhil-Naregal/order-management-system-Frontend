@@ -102,4 +102,29 @@ export class CatalogPageComponent implements OnInit {
       error: () => this.statusNote = 'Item update failed.'
     });
   }
+
+  downloadDailySalesExcel(): void {
+    this.facade.downloadDailySalesReport().subscribe({
+      next: (response) => {
+        const blob = response.body;
+        if (!blob) {
+          this.statusNote = 'Daily sales download failed.';
+          return;
+        }
+
+        const disposition = response.headers.get('content-disposition') ?? '';
+        const fileNameMatch = /filename\*=UTF-8''([^;\n\r]*)/.exec(disposition) || /filename="?([^";\n\r]*)"?/.exec(disposition);
+        const fileName = fileNameMatch ? decodeURIComponent(fileNameMatch[1]) : 'daily-sales-report.xlsx';
+
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.download = fileName;
+        anchor.click();
+        URL.revokeObjectURL(url);
+        this.statusNote = 'Daily sales Excel downloaded.';
+      },
+      error: () => this.statusNote = 'Daily sales download failed.'
+    });
+  }
 }

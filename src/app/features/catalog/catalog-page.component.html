@@ -12,6 +12,9 @@
       <div>
         <h3>R!OT•Gear</h3>
       </div>
+      <div class="top-actions">
+        <button class="secondary-btn" type="button" (click)="downloadDailySalesExcel()">Download daily sales Excel</button>
+      </div>
       <div class="tab-switch">
         <button type="button" [class.active]="activeTab === 'ITEMS'" (click)="setTab('ITEMS')">Items</button>
         <button type="button" [class.active]="activeTab === 'CATEGORIES'" (click)="setTab('CATEGORIES')">Category</button>

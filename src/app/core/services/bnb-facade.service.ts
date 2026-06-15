@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { forkJoin, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { HttpResponse } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { Category } from '../models/category.model';
 import { Customer } from '../models/customer.model';
@@ -116,6 +117,10 @@ export class BnbFacadeService {
         this.loadDashboard();
       })
     );
+  }
+
+  downloadDailySalesReport(): Observable<HttpResponse<Blob>> {
+    return this.api.getDailySalesReport();
   }
 
   private patchCustomer(customer: Customer): void {
