@@ -12,7 +12,7 @@
   gap: 20px;
   align-items: end;
   background:
-    linear-gradient(120deg, rgba(12, 16, 28, 0.68), rgba(12, 16, 28, 0.9)),
+    linear-gradient(120deg, rgba(12, 16, 28, 0.28), rgba(12, 16, 28, 0.45)),
     url('/assets/images/catalog-beverage.png') center/cover no-repeat;
 }
 

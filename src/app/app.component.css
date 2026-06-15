@@ -51,14 +51,14 @@ h1 {
 .nav-link {
   padding: 14px 18px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.16);
   color: var(--muted);
   font-weight: 700;
 }
 
 .nav-link.active {
-  background: linear-gradient(120deg, rgba(249, 191, 69, 0.28), rgba(126, 163, 255, 0.28));
+  background: linear-gradient(120deg, rgba(249, 191, 69, 0.4), rgba(126, 163, 255, 0.4));
   color: white;
 }
 
@@ -73,6 +73,8 @@ h1 {
   justify-content: space-between;
   gap: 16px;
   flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
 }
 
 .signature {
