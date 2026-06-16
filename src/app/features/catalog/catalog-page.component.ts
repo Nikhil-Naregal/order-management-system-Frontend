@@ -29,6 +29,8 @@ export class CatalogPageComponent implements OnInit {
     inStock: true,
     categoryId: null as number | null
   };
+  reportDate = '';
+  showReportDatePicker = false;
   statusNote = '';
 
   ngOnInit(): void {
@@ -104,7 +106,8 @@ export class CatalogPageComponent implements OnInit {
   }
 
   downloadDailySalesExcel(): void {
-    this.facade.downloadDailySalesReport().subscribe({
+    this.closeReportDatePicker();
+    this.facade.downloadDailySalesReport(this.reportDate || undefined).subscribe({
       next: (response) => {
         const blob = response.body;
         if (!blob) {
@@ -126,5 +129,18 @@ export class CatalogPageComponent implements OnInit {
       },
       error: () => this.statusNote = 'Daily sales download failed.'
     });
+  }
+
+  openReportDatePicker(): void {
+    this.showReportDatePicker = true;
+  }
+
+  closeReportDatePicker(): void {
+    this.showReportDatePicker = false;
+  }
+
+  resetReportDate(): void {
+    this.reportDate = '';
+    this.closeReportDatePicker();
   }
 }

@@ -34,8 +34,14 @@ export class ApiService {
     return this.http.put<Item>(`${this.baseUrl}/items/${id}`, payload);
   }
 
-  getDailySalesReport(): Observable<HttpResponse<Blob>> {
+  getDailySalesReport(date?: string): Observable<HttpResponse<Blob>> {
+    let params = new HttpParams();
+    if (date?.trim()) {
+      params = params.set('date', date.trim());
+    }
+
     return this.http.get(`${this.baseUrl}/reports/daily-sales`, {
+      params,
       observe: 'response',
       responseType: 'blob' as const
     });

@@ -13,7 +13,7 @@
         <h3>R!OT•Gear</h3>
       </div>
       <div class="top-actions">
-        <button class="secondary-btn" type="button" (click)="downloadDailySalesExcel()">Download daily sales Excel</button>
+        <button class="secondary-btn" type="button" (click)="openReportDatePicker()">Download daily sales Excel</button>
       </div>
       <div class="tab-switch">
         <button type="button" [class.active]="activeTab === 'ITEMS'" (click)="setTab('ITEMS')">Items</button>
@@ -23,6 +23,24 @@
 
     <div *ngIf="statusNote" class="status-note">{{ statusNote }}</div>
     <div *ngIf="facade.errorMessage()" class="status-note error">{{ facade.errorMessage() }}</div>
+
+    <div class="report-date-popup" *ngIf="showReportDatePicker">
+      <div class="popup-backdrop" (click)="resetReportDate()"></div>
+      <div class="popup-panel">
+        <div class="popup-header">
+          <h4>Choose report date</h4>
+          <p class="muted">Leave empty to download the latest daily sales report.</p>
+        </div>
+        <div class="popup-body">
+          <label>Report date</label>
+          <input type="date" [(ngModel)]="reportDate">
+        </div>
+        <div class="popup-actions">
+          <button class="ghost-btn" type="button" (click)="resetReportDate()">Cancel</button>
+          <button class="primary-btn" type="button" (click)="downloadDailySalesExcel()">Download</button>
+        </div>
+      </div>
+    </div>
 
     <ng-container *ngIf="activeTab === 'ITEMS'">
       <div class="glass-panel inner-card">

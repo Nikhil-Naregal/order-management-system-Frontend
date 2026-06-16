@@ -119,8 +119,8 @@ export class BnbFacadeService {
     );
   }
 
-  downloadDailySalesReport(): Observable<HttpResponse<Blob>> {
-    return this.api.getDailySalesReport();
+  downloadDailySalesReport(date?: string): Observable<HttpResponse<Blob>> {
+    return this.api.getDailySalesReport(date);
   }
 
   private patchCustomer(customer: Customer): void {
